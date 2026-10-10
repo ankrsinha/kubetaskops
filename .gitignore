@@ -1,1 +1,16 @@
+# Plan and IDE configs
 PROJECT_PLAN.md
+
+# Binaries & Build artifacts
+bin/
+dist/
+*.exe
+*.test
+*.out
+
+# Dependencies
+node_modules/
+
+# Logs & temp
+*.log
+.DS_Store
