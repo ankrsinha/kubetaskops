@@ -1,0 +1,10 @@
+apiVersion: kubetaskops.io/v1alpha1
+kind: Project
+metadata:
+  name: edge-ingress-modernization
+  namespace: default
+spec:
+  name: Edge Ingress Modernization
+  description: Migrate edge ingress proxies to Envoy with Gateway API support
+  lead: Sarah Connor
+  targetDate: "2026-12-31"

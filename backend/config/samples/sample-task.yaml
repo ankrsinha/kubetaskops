@@ -1,0 +1,14 @@
+apiVersion: kubetaskops.io/v1alpha1
+kind: Task
+metadata:
+  name: setup-kafka-replication
+  namespace: default
+spec:
+  title: Set up Kafka topic partition replication
+  description: Configure cross-AZ partition mirror for high availability
+  priority: High
+  desiredPhase: Pending
+  projectRef:
+    name: edge-ingress-modernization
+    namespace: default
+  dueDate: "2026-11-15"
