@@ -1,4 +1,8 @@
-.PHONY: help db-up db-down db-logs dev-api dev-web cluster-up cluster-down manifests generate install-crds
+.PHONY: help db-up db-down db-logs dev-api dev-web dev-operator cluster-up cluster-down manifests generate install-crds
+
+METRICS_BIND_ADDRESS ?= :8082
+HEALTH_PROBE_BIND_ADDRESS ?= :8083
+LEADER_ELECT ?= false
 
 help: ## Show this help message
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
@@ -15,10 +19,16 @@ db-logs: ## View database container logs
 dev-api: ## Run backend Go API server in dev mode
 	cd backend && go run cmd/api/main.go
 
+dev-operator: ## Run KubeTaskOps Kubernetes operator/controller manager in dev mode
+	cd backend && go run cmd/operator/main.go \
+		-metrics-bind-address=$(METRICS_BIND_ADDRESS) \
+		-health-probe-bind-address=$(HEALTH_PROBE_BIND_ADDRESS) \
+		-leader-elect=$(LEADER_ELECT)
+
 dev-web: ## Run React web frontend in dev mode
 	cd web && npm run dev
 
-cluster-up: ## Bootstrap local Kind development cluster and apply CRDs
+cluster-up: ## Bootstrap local Kind development cluster
 	./scripts/cluster-up.sh
 
 cluster-down: ## Teardown local Kind development cluster
